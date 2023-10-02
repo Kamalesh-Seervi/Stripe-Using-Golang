@@ -4,7 +4,7 @@ import "errors"
 
 func GetAllProducts() ([]Product, error) {
 	var products []Product
-	tx := db.Find(&products)
+	tx := Dbase.Find(&products)
 
 	if tx.Error != nil {
 		panic(tx.Error)
@@ -12,22 +12,20 @@ func GetAllProducts() ([]Product, error) {
 	return products, nil
 }
 
-func CreateProduct(product []Product) error {
-	tx := db.Create(product)
+func CreateProduct(product Product) error {
+	tx := Dbase.Create(&product)
 	return tx.Error
 }
 
-func GetProductById(id uint64) (Product, error) {
-	var product Product
-	tx := db.Where("id = ?", id).First(&product)
+func GetProductById(product *Product, id string) (Product, error) {
+	tx := Dbase.Where("id = ?", id).First(product)
 	if tx.Error != nil {
-		return Product{}, tx.Error
+		return *product, tx.Error
 	}
 
 	if product.Id == 0 {
-		return Product{}, errors.New("URL not found")
+		return *product, errors.New("Product not found")
 	}
 
-	return product, nil
+	return *product, nil
 }
-

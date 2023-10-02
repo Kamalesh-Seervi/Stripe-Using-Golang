@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
+var Dbase *gorm.DB
 
 type Product struct {
 	Id          uint    `json:"id"`
@@ -19,7 +19,7 @@ type Product struct {
 
 func Db_Setup() {
 	// Load configuration from config.json
-	viper.SetConfigFile("../config.json")
+	viper.SetConfigFile("config.json")
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
@@ -41,12 +41,12 @@ func Db_Setup() {
 
 	var err error
 
-	db, err = gorm.Open(postgres.Open(conn), &gorm.Config{})
+	Dbase, err = gorm.Open(postgres.Open(conn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
 
-	err = db.AutoMigrate(&Product{})
+	err = Dbase.AutoMigrate(&Product{})
 	if err != nil {
 		fmt.Println(err)
 	}
