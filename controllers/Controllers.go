@@ -8,6 +8,7 @@ import (
 
 	"github.com/Kamalesh-Seervi/stripe-in-go/models"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/paymentintent"
 )
@@ -34,20 +35,27 @@ func CreateProducts(c *gin.Context) {
 }
 
 func Config(c *gin.Context) {
-	// Fetch the Stripe public key from the environment variable
-	publicKey := os.Getenv("STRIPE_PUBLISHABLE_KEY")
+    // Fetch the Stripe public key from the environment variable
+    publicKey := os.Getenv("STRIPE_PUBLISHABLE_KEY")
 
-	if publicKey == "" {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "STRIPE_PUBLIC_KEY not set"})
-		return
-	}
+    if publicKey == "" {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "STRIPE_PUBLISHABLE_KEY not set"})
+        return
+    }
 
-	c.JSON(http.StatusOK, gin.H{"publicKey": publicKey})
+    c.JSON(http.StatusOK, gin.H{"publicKey": publicKey})
 }
+
 
 func HandleCreatePaymentIntent(c *gin.Context) {
 	var product models.Product
-	stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error in Loading .env file")
+	}
+
+	// Initialize Stripe with your secret key
+	stripeKey := os.Getenv("STRIPE_SECRET_KEY")
+	stripe.Key = stripeKey
 
 	if err := c.ShouldBindJSON(&product); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
