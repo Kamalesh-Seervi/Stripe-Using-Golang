@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Stripe-payment-Using-Golang/static/css/main.758bfaf7.css",
+    "main.js": "/Stripe-payment-Using-Golang/static/js/main.bf557a1e.js",
+    "static/js/787.d37de791.chunk.js": "/Stripe-payment-Using-Golang/static/js/787.d37de791.chunk.js",
+    "index.html": "/Stripe-payment-Using-Golang/index.html",
+    "main.758bfaf7.css.map": "/Stripe-payment-Using-Golang/static/css/main.758bfaf7.css.map",
+    "main.bf557a1e.js.map": "/Stripe-payment-Using-Golang/static/js/main.bf557a1e.js.map",
+    "787.d37de791.chunk.js.map": "/Stripe-payment-Using-Golang/static/js/787.d37de791.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.758bfaf7.css",
+    "static/js/main.bf557a1e.js"
+  ]
+}
